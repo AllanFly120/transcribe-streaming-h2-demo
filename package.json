@@ -1,0 +1,19 @@
+{
+  "name": "transcribe-streaming-h2-demo",
+  "version": "1.0.0",
+  "description": "A demo to show how JS SDK V3 transcribe streaming client support h2 in Node.js",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AllanFly120/transcribe-streaming-h2-demo.git"
+  },
+  "author": "zheallan@amazon.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AllanFly120/transcribe-streaming-h2-demo/issues"
+  },
+  "homepage": "https://github.com/AllanFly120/transcribe-streaming-h2-demo#readme"
+}
