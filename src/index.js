@@ -1,7 +1,9 @@
 const { 
     TranscribeStreamingClient, 
-    StartStreamTranscriptionCommand
+    StartStreamTranscriptionCommand,
+    BadRequestException
 } = require("../../aws-sdk-js-v3/clients/client-transcribe-streaming");
+const {ExponentialBackOffStrategy, defaultRetryDecider} = require("../../aws-sdk-js-v3/packages/middleware-retry");
 const fs = require('fs');
 
 (async () => {
@@ -12,10 +14,13 @@ const fs = require('fs');
             yield {AudioEvent: {AudioChunk: chunk}}
         }
     }
-    const client = new TranscribeStreamingClient({credentials: {
-        accessKeyId: 'key',
-        secretAccessKey: 'secret'
-    }});
+    const client = new TranscribeStreamingClient({
+        // retry the request on BadRequestException.
+        retryStrategy: new ExponentialBackOffStrategy(3, error => {
+            if (BadRequestException.isa(error)) return true;
+            return defaultRetryDecider(error);
+        })
+    });
 
     const command = new StartStreamTranscriptionCommand({
         LanguageCode: 'en-US',
